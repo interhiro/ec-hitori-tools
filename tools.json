@@ -1,0 +1,53 @@
+{
+  "_comment": "EC一人社長向けおすすめツール。affiliate_url が空なら official_url にフォールバック(収益化されない)。affiliate_url は各ASPの審査通過後に貼る。",
+  "tools": [
+    {
+      "id": "base",
+      "name": "BASE",
+      "category": "ネットショップ開設",
+      "blurb": "初期費用ゼロで今日からショップを開ける。一人で始めるECの定番。",
+      "official_url": "https://thebase.com/",
+      "affiliate_url": ""
+    },
+    {
+      "id": "shopify",
+      "name": "Shopify",
+      "category": "ネットショップ開設",
+      "blurb": "本格的に伸ばすなら。越境・在庫・アプリ拡張まで一人で回せる。",
+      "official_url": "https://www.shopify.com/jp",
+      "affiliate_url": ""
+    },
+    {
+      "id": "canva",
+      "name": "Canva Pro",
+      "category": "デザイン",
+      "blurb": "商品画像・バナー・SNS投稿を一人で量産。テンプレが一人社長の時間を救う。",
+      "official_url": "https://www.canva.com/",
+      "affiliate_url": ""
+    },
+    {
+      "id": "colormeshop",
+      "name": "カラーミーショップ",
+      "category": "ネットショップ開設",
+      "blurb": "デザイン自由度が高い国産カート。中規模まで一人で運用しやすい。",
+      "official_url": "https://shop-pro.jp/",
+      "affiliate_url": ""
+    },
+    {
+      "id": "freee",
+      "name": "freee会計",
+      "category": "会計・バックオフィス",
+      "blurb": "確定申告・請求・経費を自動化。一人社長の事務時間を最小化する。",
+      "official_url": "https://www.freee.co.jp/",
+      "affiliate_url": ""
+    },
+    {
+      "id": "lstep",
+      "name": "Lステップ",
+      "category": "LINE集客・自動化",
+      "blurb": "LINE公式の配信・ステップ・セグメントを自動化。リピート導線を一人で組める。",
+      "official_url": "https://linestep.jp/",
+      "affiliate_url": ""
+    }
+  ]
+}
