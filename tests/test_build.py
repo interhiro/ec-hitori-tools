@@ -47,3 +47,30 @@ def test_build_html_is_complete_document():
     assert html.strip().startswith("<!DOCTYPE html>")
     assert "track.js" in html
     assert "EC" in html  # category appears
+
+
+def test_build_html_includes_article_links_when_articles_dir_given(tmp_path):
+    articles_dir = tmp_path / "articles"
+    articles_dir.mkdir()
+    (articles_dir / "sample.md").write_text(
+        "---\ntitle: サンプルコラム\nslug: sample\n---\n\n本文\n", encoding="utf-8"
+    )
+
+    out = build_html(FIX_TOOLS, FIX_CFG, articles_dir=str(articles_dir))
+
+    assert "サンプルコラム" in out
+    assert "articles/sample.html" in out
+
+
+def test_build_html_omits_article_section_when_no_articles(tmp_path):
+    articles_dir = tmp_path / "articles"
+    articles_dir.mkdir()
+
+    out = build_html(FIX_TOOLS, FIX_CFG, articles_dir=str(articles_dir))
+
+    assert "コラム" not in out
+
+
+def test_build_html_backward_compatible_without_articles_dir():
+    out = build_html(FIX_TOOLS, FIX_CFG)
+    assert "コラム" not in out
