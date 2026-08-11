@@ -1,0 +1,10 @@
+{
+  "_comment": "アフィリエイト口座ID。各ASPの審査通過後にここを埋める。空欄の間はリンクが公式URLにフォールバックする(収益化されない)。",
+  "subid_param": "utm_content",
+  "site_base_url": "https://interhiro.github.io/ec-hitori-tools/",
+  "networks": {
+    "amazon": { "tag": "", "_note": "Amazon Associates のトラッキングID(例: yourtag-22)" },
+    "moshimo": { "a_id": "", "p_id": "", "pc_id": "", "pl_id": "", "_note": "もしもアフィリエイト の各ID" },
+    "a8": { "_note": "A8.net は広告主ごとに固有リンク。tools.json の affiliate_url に直接貼る" }
+  }
+}
