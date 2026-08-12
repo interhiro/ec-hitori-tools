@@ -94,6 +94,69 @@ def render_info_page(title: str, description: str, body_html: str) -> str:
 '''
 
 
+
+# 先行案内リストの登録先。既存の問い合わせフォームの必須項目をプリフィルで
+# 埋め、利用者の入力を名前とメールだけにする。専用フォームを別途作るまでの形。
+LIST_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeDsCQpd38fypvmCOGcLqkk53tIVfbVa7mLBUScPQ8jBzxZiA/viewform?usp=pp_url&entry.1096177863=%E5%85%88%E8%A1%8C%E6%A1%88%E5%86%85%E3%83%AA%E3%82%B9%E3%83%88&entry.2024387457=%E6%96%B0%E3%81%97%E3%81%84%E5%8B%95%E7%94%BB%E3%81%A8%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%88%E6%9B%B4%E6%96%B0%E7%89%88%E3%81%AE%E5%85%88%E8%A1%8C%E6%A1%88%E5%86%85%E3%82%92%E5%B8%8C%E6%9C%9B%E3%81%97%E3%81%BE%E3%81%99"
+
+
+def render_checklist_page() -> str:
+    """公開済み動画10本の内容を1枚に畳んだチェックリスト。
+
+    リストに登録する理由がなければ登録は起きない。これはその理由であり、
+    それ自体が公開資産(検索で拾われる面)でもある。
+    """
+    body = """      <p class="updated">ネットショップを開いて、最初の1件が売れるまでにやることを、順番に並べています。上から順に消していけば迷いません。</p>
+      <h2>開業前</h2>
+      <ul class=\"checklist\">
+        <li class=\"check\">屋号を決める（空欄でも提出できる。ここで止まらない）</li>
+        <li class=\"check\">開業日を決める（ショップ公開日でも初注文日でもいい）</li>
+        <li class=\"check\">自宅の住所を管轄する税務署を調べる</li>
+        <li class=\"check\">開業届を出す（開業から1か月以内。遅れても罰則はない）</li>
+        <li class=\"check\">青色申告承認申請書を同じ日に出す（原則3月15日、年の途中の開業なら2か月以内）</li>
+        <li class=\"check\">売上を受け取る銀行口座を用意する（個人の口座で始められる）</li>
+      </ul>
+      <h2>商品を決める</h2>
+      <ul class=\"checklist\">
+        <li class=\"check\">同じものを、あと10個用意できるか</li>
+        <li class=\"check\">仕入・送料・梱包・手数料を引いて、売り値の3割が残るか</li>
+        <li class=\"check\">用途・素材・使う場面の3語で商品名が作れるか</li>
+      </ul>
+      <h2>ショップを作る</h2>
+      <ul class=\"checklist\">
+        <li class=\"check\">ショップ名とURLを決める（あとから変えると全部貼り直しになる）</li>
+        <li class=\"check\">送料の出し方を決める（全国一律か地域別か／商品代に含めるか別に取るか）</li>
+        <li class=\"check\">返品の条件を決める（受けるか／何日以内か／送料はどちらが持つか）</li>
+        <li class=\"check\">決済方法を選ぶ（クレジットカードは必ず入れる）</li>
+        <li class=\"check\">特定商取引法に基づく表記に書く内容をそろえる</li>
+      </ul>
+      <h2>商品ページ</h2>
+      <ul class=\"checklist\">
+        <li class=\"check\">写真を3枚そろえる（全体・寄り・使っている場面）</li>
+        <li class=\"check\">1枚目は余白を残して、作品を真ん中に置く</li>
+        <li class=\"check\">サイズ・素材・お手入れの方法を書く</li>
+        <li class=\"check\">在庫数を入れる（1のまま放置すると売れた瞬間に売り場が消える）</li>
+      </ul>
+      <h2>公開前</h2>
+      <ul class=\"checklist\">
+        <li class=\"check\">自分のスマホで、実際に最後まで注文してみる</li>
+        <li class=\"check\">スマホでの見え方を確認する（買う人はほぼスマホ）</li>
+        <li class=\"check\">ショップのURLを実際に開く（カードに印刷する前・SNSに貼る前）</li>
+      </ul>
+      <h2>公開後</h2>
+      <ul class=\"checklist\">
+        <li class=\"check\">アクセス数を見る（見られていない／見られたが買われていない を切り分ける）</li>
+        <li class=\"check\">直す順番は 写真 → 言葉 → 値段。作り直しは最後</li>
+        <li class=\"check\">一度に3つ変えない。1つ直したら2週間そのまま置く</li>
+      </ul>
+      <h2>この先の更新を受け取る</h2>
+      <p>新しい動画の公開と、このチェックリストの更新版を先にお知らせします。<a class="list-cta" href="{form}">先行案内リストに登録する</a></p>"""
+    return render_info_page(
+        "開業チェックリスト",
+        "ネットショップを開いて最初の1件が売れるまでにやること。24項目のチェックリスト。",
+        body.format(form=LIST_FORM_URL),
+    )
+
 def render_policy_pages() -> dict[str, str]:
     """ASP審査と利用者保護に必要な固定4ページを返す。"""
     operator = render_info_page(
@@ -245,6 +308,7 @@ def build_html(
 ) -> str:
     tools = tools_data.get("tools", [])
     cards_html = render_cards(tools, cfg)
+    list_form = LIST_FORM_URL
     videos_html = render_video_cards((videos_data or {}).get("videos", []))
     video_section = f'''    <section class="videos-section">
       <div class="section-heading">
@@ -280,7 +344,20 @@ def build_html(
 
   <main>
     <div id="latest-videos"></div>
-{video_section}    <section class="tools-section">
+{video_section}    <section class="list-section">
+      <div class="section-heading">
+        <span class="eyebrow">CHECKLIST</span>
+        <h2>開業から最初の1件が売れるまで、24項目</h2>
+        <p>動画で話した内容を1枚に畳んだチェックリストです。上から順に消していけば迷いません。</p>
+      </div>
+      <p class="list-actions">
+        <a class="list-cta" href="checklist.html">チェックリストを見る</a>
+        <a class="list-cta secondary" href="{list_form}">先行案内リストに登録する</a>
+      </p>
+      <p class="list-note">新しい動画の公開と、チェックリストの更新版を先にお知らせします。登録は無料で、いつでも解除できます。</p>
+    </section>
+
+    <section class="tools-section">
       <div class="section-heading">
         <span class="eyebrow">TOOLS</span>
         <h2>動画で触れた、運営に役立つツール</h2>
@@ -316,13 +393,15 @@ def main() -> None:
     )
     with open(os.path.join(HERE, "index.html"), "w", encoding="utf-8") as f:
         f.write(out)
-    for filename, page in render_policy_pages().items():
+    pages = dict(render_policy_pages())
+    pages["checklist.html"] = render_checklist_page()
+    for filename, page in pages.items():
         with open(os.path.join(HERE, filename), "w", encoding="utf-8") as f:
             f.write(page)
     monetized = sum(1 for t in tools_data.get("tools", []) if (t.get("affiliate_url") or "").strip())
     total = len(tools_data.get("tools", []))
     print(
-        f"built index.html + 4 info pages: {len(videos_data.get('videos', []))} videos, "
+        f"built index.html + 5 info pages: {len(videos_data.get('videos', []))} videos, "
         f"{total} tools ({monetized} monetized, {total - monetized} pending affiliate_url)"
     )
 

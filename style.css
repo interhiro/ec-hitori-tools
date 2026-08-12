@@ -187,3 +187,60 @@ footer { padding: 38px 24px; border-top: 1px solid var(--line); background: var(
   .legal-list div { grid-template-columns: 1fr; gap: 4px; }
   .hero p br { display: none; }
 }
+
+/* 先行案内リストとチェックリスト */
+.list-section {
+  background: var(--surface-soft);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 32px 28px;
+  margin: 40px 0;
+}
+.list-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0 12px;
+}
+.list-cta {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 14px 24px;
+  border-radius: 10px;
+}
+.list-cta:hover { background: var(--accent-dark); }
+.list-cta.secondary {
+  background: var(--surface);
+  color: var(--accent-dark);
+  border: 2px solid var(--accent);
+}
+.list-cta.secondary:hover { background: #fff; }
+.list-note {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin: 0;
+}
+.checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+}
+.checklist .check {
+  position: relative;
+  padding: 12px 12px 12px 40px;
+  border-bottom: 1px solid var(--line);
+  line-height: 1.6;
+}
+.checklist .check::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 16px;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--accent);
+  border-radius: 4px;
+}

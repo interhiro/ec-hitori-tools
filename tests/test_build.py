@@ -4,6 +4,8 @@ import re
 
 from build import (
     build_html,
+    render_checklist_page,
+    build_html,
     render_footer,
     render_policy_pages,
     render_video_cards,
@@ -176,3 +178,27 @@ def test_operator_page_rows_are_limited_to_the_approved_set():
     """
     rows = set(re.findall(r"<dt>([^<]+)</dt>", render_policy_pages()["operator.html"]))
     assert rows == {"サイト名", "発信内容", "お問い合わせ"}
+
+
+def test_checklist_page_is_generated_with_all_sections():
+    """リスト登録の理由になる公開資産。動画10本の内容を1枚に畳んだもの。"""
+    page = render_checklist_page()
+    for heading in ("開業前", "商品を決める", "ショップを作る", "商品ページ", "公開前", "公開後"):
+        assert heading in page, heading
+    assert page.count('class="check"') >= 20
+
+
+def test_index_has_a_list_signup_with_a_working_prefilled_form():
+    """再生が増えてもリスト導線が無ければ Day60 の合格条件を満たせない。"""
+    out = build_html(FIX_TOOLS, {"subid_param": "id1"})
+    assert "先行案内" in out
+    assert "docs.google.com/forms" in out
+    # 問い合わせフォームの必須項目をプリフィルで埋め、入力を名前とメールだけにする
+    assert "entry.1096177863=" in out
+    assert "entry.2024387457=" in out
+
+
+def test_checklist_page_exposes_no_operator_identity():
+    page = render_checklist_page()
+    for label in ("<dt>運営者</dt>", "<dt>運営責任者</dt>", "運営："):
+        assert label not in page
