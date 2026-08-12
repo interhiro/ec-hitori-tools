@@ -1,20 +1,30 @@
 # アフィリンク投入シート（運営者 → Claude）
 
-審査済み・afb/A8/もしも アカウントあり・担当付きが前提。
+**ASPはA8.net一本。** 6ツールの取り扱いを1件ずつ実地調査した結果、
+BASE・カラーミー・freee・minne・ラクスルが全てA8にあり、afbは該当ゼロ、
+もしもはfreeeのみでA8と重複だったため。詳細は提携申請時の調査記録を参照。
 **やること: 管理画面で各ツールの広告主と提携 → 発行されたアフィリンクURLを下の「貼る欄」にペーストするだけ。**
 1つでも埋めてくれれば Claude が tools.json に反映 → `build.py` 再実行 → LP に即反映（`data-monetized="true"` になる）。
 
 > リンクは「素のアフィURL」でOK。動画別トラッキング（?v=）は LP 側の track.js が自動付与するので、ここでは付けなくて良い。
 > どのASPで提携したかは任意メモ（成果照合の参考）。
 
-| tools.json の id | ツール | 想定ASP（候補） | 貼る欄（アフィURL） | 提携したASP |
+| tools.json の id | ツール | 申請先ASP | 状態 | 貼る欄（アフィURL） |
 |---|---|---|---|---|
-| base | BASE | A8 / もしも | | |
-| shopify | Shopify | もしも / アクセストレード等 | | |
-| canva | Canva Pro | **Impact（Canvassador）※別系統** | | |
-| colormeshop | カラーミーショップ | A8 / afb / バリューコマース | | |
-| freee | freee会計 | A8 / もしも | | |
-| lstep | Lステップ | A8 / 各ASP | | |
+| base | BASE | A8.net | 申請済み(2026-08-12) | |
+| colormeshop | カラーミーショップ | A8.net | 申請済み(2026-08-12) | |
+| freee | freee会計 | A8.net | 申請済み(2026-08-12) | |
+| minne | minne | A8.net | 申請済み(2026-08-12) | |
+| rakusul | ラクスル | A8.net | 申請済み(2026-08-12) | |
+
+### 申請していないもの（記録）
+
+| ツール | 理由 |
+|---|---|
+| プリントパック | A8.netに取り扱いが無いことを管理画面で確認(2026-08-12) |
+| Shopify | ASP外(公式Shopify Partners)。開業直後の視聴者には月額固定費が壁で、対応する動画も薄い |
+| Canva Pro | ASP外(Canvassador / Impact経由)。必要になれば別途取得する |
+| Lステップ | ASP外。正規代理店制度が本線で、一人作家の段階には早い |
 
 ## 補足
 - **Canva** は A8/afb/もしも に無い。Canva公式 Canvassador（Impact 経由）で発行 → そのリンクをcanva欄に貼る。面倒なら canva 行は空のままでOK（公式URLにフォールバックし続ける）。
