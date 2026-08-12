@@ -3,17 +3,24 @@
 // これで「どの動画がクリック/成約させたか」が ASP 管理画面の sub-id 別レポートで分かる。
 // バックエンド不要・完全クライアントサイド。
 
+// A8.netのパラメータ計測は「半角英数字のみ・最大50byte」。記号を含む値を
+// そのまま渡すと計測が落ちる。動画スラッグ(ec-tips-06)を安全な形に均す。
+function sanitizeSubId(value) {
+  return String(value || '').replace(/[^0-9A-Za-z]/g, '').slice(0, 50);
+}
+
 // テスト可能な純粋関数: base URL に subid パラメータを付与して返す。
 function appendSubId(baseHref, subidParam, videoSlug) {
-  if (!videoSlug) return baseHref;
+  var subid = sanitizeSubId(videoSlug);
+  if (!subid) return baseHref;
   try {
     var u = new URL(baseHref);
-    u.searchParams.set(subidParam, videoSlug);
+    u.searchParams.set(subidParam, subid);
     return u.toString();
   } catch (e) {
     // 相対URL等で URL() が失敗した場合は素朴に連結
     var sep = baseHref.indexOf('?') === -1 ? '?' : '&';
-    return baseHref + sep + encodeURIComponent(subidParam) + '=' + encodeURIComponent(videoSlug);
+    return baseHref + sep + encodeURIComponent(subidParam) + '=' + encodeURIComponent(subid);
   }
 }
 
@@ -38,5 +45,5 @@ if (typeof document !== 'undefined') {
 
 // node テスト用エクスポート
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { appendSubId: appendSubId, getVideoSlug: getVideoSlug };
+  module.exports = { appendSubId: appendSubId, getVideoSlug: getVideoSlug, sanitizeSubId: sanitizeSubId };
 }

@@ -11,10 +11,14 @@ BASE・カラーミー・freee・minne・ラクスルが全てA8にあり、afb�
 
 | tools.json の id | ツール | 申請先ASP | 状態 | 貼る欄（アフィURL） |
 |---|---|---|---|---|
-| base | BASE | A8.net | 申請済み(2026-08-12) | |
-| colormeshop | カラーミーショップ | A8.net | 申請済み(2026-08-12) | |
+| base | BASE | A8.net | 申請済み(2026-08-12) | <a href="https://px.a8.net/svt/ejp?a8mat=4BA419+E22MDM+2QQG+68EPE" rel="nofollow">自由ワード</a>
+<img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=4BA419+E22MDM+2QQG+68EPE" alt="">|
+| colormeshop | カラーミーショップ | A8.net | 申請済み(2026-08-12) | 個人事業主・中小企業にぴったり！理想のオリジナルネットショップが作れます。<br>
+【 <A href="https://px.a8.net/svt/ejp?a8mat=4BA419+E1H6RU+348+I2I7M" rel="nofollow">カラーミーショップ</A> 】
+<img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=4BA419+E1H6RU+348+I2I7M" alt="">|
 | freee | freee会計 | A8.net | 申請済み(2026-08-12) | |
-| minne | minne | A8.net | 申請済み(2026-08-12) | |
+| minne | minne | A8.net | 申請済み(2026-08-12) |<a href="https://px.a8.net/svt/ejp?a8mat=4BA419+EOP3D6+348+2BCWEQ" rel="nofollow">minne</a>
+<img border="0" width="1" height="1" src="https://www14.a8.net/0.gif?a8mat=4BA419+EOP3D6+348+2BCWEQ" alt=""> |
 | rakusul | ラクスル | A8.net | 申請済み(2026-08-12) | |
 
 ### 申請していないもの（記録）

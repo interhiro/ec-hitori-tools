@@ -7,23 +7,7 @@
       "category": "ネットショップ開設",
       "blurb": "初期費用ゼロで今日からショップを開ける。一人で始めるECの定番。",
       "official_url": "https://thebase.com/",
-      "affiliate_url": ""
-    },
-    {
-      "id": "shopify",
-      "name": "Shopify",
-      "category": "ネットショップ開設",
-      "blurb": "本格的に伸ばすなら。越境・在庫・アプリ拡張まで一人で回せる。",
-      "official_url": "https://www.shopify.com/jp",
-      "affiliate_url": ""
-    },
-    {
-      "id": "canva",
-      "name": "Canva Pro",
-      "category": "デザイン",
-      "blurb": "商品画像・バナー・SNS投稿を一人で量産。テンプレが一人社長の時間を救う。",
-      "official_url": "https://www.canva.com/",
-      "affiliate_url": ""
+      "affiliate_url": "https://px.a8.net/svt/ejp?a8mat=4BA419+E22MDM+2QQG+68EPE"
     },
     {
       "id": "colormeshop",
@@ -31,7 +15,15 @@
       "category": "ネットショップ開設",
       "blurb": "デザイン自由度が高い国産カート。中規模まで一人で運用しやすい。",
       "official_url": "https://shop-pro.jp/",
-      "affiliate_url": ""
+      "affiliate_url": "https://px.a8.net/svt/ejp?a8mat=4BA419+E1H6RU+348+I2I7M"
+    },
+    {
+      "id": "minne",
+      "name": "minne",
+      "category": "ハンドメイド販売",
+      "blurb": "作家登録は無料。ネットショップと並行して置ける、国内最大級のハンドメイドマーケット。",
+      "official_url": "https://minne.com/",
+      "affiliate_url": "https://px.a8.net/svt/ejp?a8mat=4BA419+EOP3D6+348+2BCWEQ"
     },
     {
       "id": "freee",
@@ -42,11 +34,19 @@
       "affiliate_url": ""
     },
     {
-      "id": "lstep",
-      "name": "Lステップ",
-      "category": "LINE集客・自動化",
-      "blurb": "LINE公式の配信・ステップ・セグメントを自動化。リピート導線を一人で組める。",
-      "official_url": "https://linestep.jp/",
+      "id": "rakusul",
+      "name": "ラクスル",
+      "category": "同梱物・印刷",
+      "blurb": "台紙・ショップカード・名刺を小ロットから。同梱物はリピートを作る唯一の接点。",
+      "official_url": "https://raksul.com/",
+      "affiliate_url": ""
+    },
+    {
+      "id": "canva",
+      "name": "Canva Pro",
+      "category": "デザイン",
+      "blurb": "商品画像・バナー・SNS投稿を一人で量産。テンプレが一人社長の時間を救う。",
+      "official_url": "https://www.canva.com/",
       "affiliate_url": ""
     }
   ]
