@@ -269,6 +269,37 @@ def render_article_links(articles_dir: str) -> str:
 '''
 
 
+def render_sitemap(site_base_url: str, articles_dir: str) -> str:
+    """検索エンジン向けに、公開ページと補足ノートのURLを列挙する。"""
+    from articles_build import parse_front_matter
+
+    base = site_base_url.rstrip("/") + "/"
+    entries = [
+        ("", ""),
+        ("checklist.html", ""),
+        ("operator.html", ""),
+        ("privacy.html", ""),
+        ("contact.html", ""),
+        ("disclaimer.html", ""),
+    ]
+    for md_path in sorted(glob.glob(os.path.join(articles_dir, "*.md"))):
+        with open(md_path, encoding="utf-8") as f:
+            meta, _ = parse_front_matter(f.read())
+        slug = meta.get("slug") or os.path.splitext(os.path.basename(md_path))[0]
+        entries.append((f"articles/{slug}.html", meta.get("date", "")))
+
+    urls = []
+    for path, lastmod in entries:
+        url = html.escape(base + path, quote=False)
+        lastmod_tag = f"<lastmod>{html.escape(lastmod)}</lastmod>" if lastmod else ""
+        urls.append(f"  <url><loc>{url}</loc>{lastmod_tag}</url>")
+    return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + (
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "\n".join(urls)
+        + "\n</urlset>\n"
+    )
+
+
 def resolve_link(tool: dict, cfg: dict) -> tuple[str, bool]:
     """ツールの遷移先URLと、収益化済みかどうかを返す。"""
     aff = (tool.get("affiliate_url") or "").strip()
@@ -277,8 +308,21 @@ def resolve_link(tool: dict, cfg: dict) -> tuple[str, bool]:
     return tool.get("official_url", "").strip(), False
 
 
-def render_cards(tools: list[dict], cfg: dict) -> str:
+def render_cards(
+    tools: list[dict], cfg: dict, default_subid: str = ""
+) -> str:
+    """ツールカードを返す。
+
+    ``default_subid`` は、YouTube 経由ではない公開資産（補足ノート等）の
+    成果を ASP 側で切り分けるための既定値。URL に ``?v=`` がある場合は、
+    ``track.js`` がそちらを優先する。
+    """
     subid_param = cfg.get("subid_param", "utm_content")
+    default_source_attr = (
+        f' data-default-subid="{html.escape(default_subid, quote=True)}"'
+        if default_subid
+        else ""
+    )
     cards = []
     for t in tools:
         url, monetized = resolve_link(t, cfg)
@@ -292,7 +336,7 @@ def render_cards(tools: list[dict], cfg: dict) -> str:
         <h3>{name}</h3>
         <p>{blurb}</p>
         <a class="cta" href="{href}" target="_blank" rel="nofollow sponsored noopener"
-           data-base-href="{href}" data-subid-param="{html.escape(subid_param, quote=True)}">
+           data-base-href="{href}" data-subid-param="{html.escape(subid_param, quote=True)}"{default_source_attr}>
           {name} を見る →
         </a>
       </article>'''
@@ -398,10 +442,18 @@ def main() -> None:
     for filename, page in pages.items():
         with open(os.path.join(HERE, filename), "w", encoding="utf-8") as f:
             f.write(page)
+    sitemap = render_sitemap(cfg.get("site_base_url", ""), os.path.join(HERE, "articles"))
+    with open(os.path.join(HERE, "sitemap.xml"), "w", encoding="utf-8") as f:
+        f.write(sitemap)
+    with open(os.path.join(HERE, "robots.txt"), "w", encoding="utf-8") as f:
+        f.write(
+            "User-agent: *\nAllow: /\n"
+            f"Sitemap: {cfg.get('site_base_url', '').rstrip('/')}/sitemap.xml\n"
+        )
     monetized = sum(1 for t in tools_data.get("tools", []) if (t.get("affiliate_url") or "").strip())
     total = len(tools_data.get("tools", []))
     print(
-        f"built index.html + 5 info pages: {len(videos_data.get('videos', []))} videos, "
+        f"built index.html + 5 info pages + sitemap: {len(videos_data.get('videos', []))} videos, "
         f"{total} tools ({monetized} monetized, {total - monetized} pending affiliate_url)"
     )
 

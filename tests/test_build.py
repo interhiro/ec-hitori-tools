@@ -9,6 +9,7 @@ from build import (
     render_footer,
     render_policy_pages,
     render_video_cards,
+    render_sitemap,
     resolve_link,
     render_cards,
 )
@@ -50,6 +51,11 @@ def test_render_cards_embeds_subid_param_for_tracking():
     html = render_cards(FIX_TOOLS["tools"], FIX_CFG)
     # track.js が ?v= を読んで付与する先のパラメータ名がカードに埋まっている
     assert 'data-subid-param="utm_content"' in html
+
+
+def test_render_cards_can_embed_a_default_source_for_article_tracking():
+    html = render_cards(FIX_TOOLS["tools"], FIX_CFG, default_subid="article-opening")
+    assert 'data-default-subid="article-opening"' in html
 
 
 def test_build_html_is_complete_document():
@@ -121,6 +127,16 @@ def test_build_html_omits_article_section_when_no_articles(tmp_path):
 def test_build_html_backward_compatible_without_articles_dir():
     out = build_html(FIX_TOOLS, FIX_CFG)
     assert "コラム" not in out
+
+
+def test_sitemap_lists_the_homepage_and_dated_articles(tmp_path):
+    (tmp_path / "opening.md").write_text(
+        "---\ntitle: 開店\ndate: 2026-08-14\nslug: opening\n---\n\n本文\n",
+        encoding="utf-8",
+    )
+    sitemap = render_sitemap("https://x.github.io/site/", str(tmp_path))
+    assert "https://x.github.io/site/</loc>" in sitemap
+    assert "https://x.github.io/site/articles/opening.html</loc><lastmod>2026-08-14</lastmod>" in sitemap
 
 
 def test_render_article_links_orders_by_date_desc(tmp_path):

@@ -168,7 +168,10 @@ def render_article_page(meta: dict, body_html: str, tools_data: dict, cfg: dict)
     # 関連ツールカード(meta.tools の id に一致するものだけ)
     want = set(meta.get("tools", []))
     related = [t for t in tools_data.get("tools", []) if t.get("id") in want]
-    cards_html = render_cards(related, cfg) if related else ""
+    # 記事ごとに既定の sub-id を付ける。YouTube の ?v= が付く流入では
+    # そちらを優先し、検索・直接流入はこの記事自身の成果として観測する。
+    slug = meta.get("slug", "")
+    cards_html = render_cards(related, cfg, default_subid=f"article-{slug}") if related else ""
     related_section = (
         f'''    <section class="related">
       <h2>この記事で紹介したツール</h2>

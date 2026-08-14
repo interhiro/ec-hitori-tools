@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { appendSubId, getVideoSlug, sanitizeSubId } = require('../track.js');
+const { appendSubId, getVideoSlug, getTrackingSource, sanitizeSubId } = require('../track.js');
 
 let pass = 0, fail = 0;
 function t(name, fn) {
@@ -39,6 +39,14 @@ t('getVideoSlug reads v param', () => {
 
 t('getVideoSlug empty when absent', () => {
   assert.strictEqual(getVideoSlug('?foo=1'), '');
+});
+
+t('getTrackingSource uses a page default when v is absent', () => {
+  assert.strictEqual(getTrackingSource('?foo=1', 'article-opening'), 'article-opening');
+});
+
+t('getTrackingSource gives a YouTube v value priority over the page default', () => {
+  assert.strictEqual(getTrackingSource('?v=ec-tips-12', 'article-opening'), 'ec-tips-12');
 });
 
 t('sanitizeSubId strips characters A8 rejects', () => {
