@@ -1,7 +1,7 @@
 ---
 title: ネットショップを開く前に決める4つ｜BASEを登録する前のチェックリスト
 description: ネットショップの登録画面を開く前に決めるべきことは、ショップ名・送料・返品・決済の4つ。個人・ハンドメイド販売で手を止めないための順番を整理します。
-date: 2026-08-14
+date: 2026-08-15
 slug: netshop-opening-four-decisions
 tools: base,colormeshop
 ---
