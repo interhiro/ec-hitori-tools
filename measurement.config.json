@@ -1,6 +1,6 @@
 {
   "provider": "ga4",
-  "measurement_id": "",
+  "measurement_id": "G-M8MXQJLYFS",
   "status_when_blank": "unobserved",
   "setup_note": "Create or select the GA4 web data stream for https://interhiro.github.io/ec-hitori-tools/, then set its public G- measurement ID here and deploy. Do not enter secrets in this file."
 }
