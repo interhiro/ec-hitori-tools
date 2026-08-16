@@ -29,7 +29,9 @@ The experiment **started on 2026-08-16**. Both YouTube path changes are public:
 
 - Long form `fiS_R3IkQg4`: description LP link now carries `&source_id=yt_short_photo_aar5wmqvi0`; confirmed over unauthenticated HTTP.
 - Short `Aar-5wMqVI0`: description now links directly to `watch?v=fiS_R3IkQg4`; confirmed over unauthenticated HTTP.
-- **Still manual:** the YouTube Studio Shorts "related video" setting has no YouTube Data API field, so it was not applied. The description link is the substitute. Setting it in Studio would strengthen the path.
+- Short `Aar-5wMqVI0`: the YouTube Studio "related video" is set to `fiS_R3IkQg4`. This field has no YouTube Data API equivalent, so Shimayama applied it by hand; the edit page was then reloaded and the field still held the long-form title, confirming it persisted rather than showing unsaved UI state.
+
+All three paths into the funnel are therefore live: the Shorts player related-video, the Short's description link, and the long form's source-tagged LP link.
 
 Baseline at go-live (`2026-08-16T07:29:03Z`): Short `Aar-5wMqVI0` 1,850 views / 1 like; long form `fiS_R3IkQg4` 1 view / 0 likes. GA4 funnel counts start at 0 today — this is start-of-observation, not observed zero.
 
@@ -46,6 +48,7 @@ Evaluation date: 2026-08-23. No outcome is claimed before that date.
 
 ## Next actions
 
-1. (Shimayama, optional) Set the Shorts "related video" on `Aar-5wMqVI0` to `fiS_R3IkQg4` in YouTube Studio — not reachable via the Data API.
-2. On 2026-08-23, read GA4 for `lp_view` / `affiliate_click` / `list_signup` broken down by `source_id`, read A8 clicks and conversions by `id1=ec-tips-09`, and re-measure both videos. Record the result in `../shimayama-ops/state/market_contact_ledger.csv`.
-3. Keep `source_id` values distinct per path so future arms stay separable.
+1. On 2026-08-23, read GA4 for `lp_view` / `affiliate_click` / `list_signup` broken down by `source_id`, read A8 clicks and conversions by `id1=ec-tips-09`, and re-measure both videos. Record the result in `../shimayama-ops/state/market_contact_ledger.csv`.
+2. Keep `source_id` values distinct per path so future arms stay separable.
+
+Because the long form sat at 1 view when the funnel went live, almost all of its subsequent gain is attributable to this path.
