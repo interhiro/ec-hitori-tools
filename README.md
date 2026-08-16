@@ -17,6 +17,7 @@ YouTube動画 概要欄
 - `tools.json` — 掲載ツール(名前・カテゴリ・紹介文・公式URL・アフィURL)
 - `videos.json` — トップに掲載する公開確認済みYouTube動画（新しい順）
 - `affiliate.config.json` — アフィ口座ID(**ここが唯一の要設定**)
+- `measurement.config.json` — LPイベントをGA4へ送る公開用設定（ID未設定時は**未観測**）
 - `build.py` — データからトップと運営者・ポリシー4ページを生成
 - `track.js` — `?v=` を読みアフィリンクに sub-id を付与(完全クライアントサイド)
 - `articles_build.py` — 動画の補足ノートをMarkdownから生成
@@ -33,6 +34,18 @@ python3 articles_build.py  # 補足ノートHTML
 python3 -m pytest -q    # build ロジックのテスト
 node tests/track.test.js  # トラッキングのテスト
 ```
+
+## LPイベント計測
+
+`track.js` は、流入URLの `source_id`（なければ従来の `v`）と安全なページパスだけを添えて、次のイベントを送ります。任意のURLクエリ文字列はGA4へ送信しません。
+
+- `lp_view` — LPを表示した
+- `affiliate_click` — アフィリエイトリンクを開いた
+- `list_signup` — 先行案内リストのGoogleフォームを開いた（フォーム送信の完了自体は、GitHub Pagesからは観測できない）
+
+既存の `?v=ec-tips-09` のようなURLは、引き続きA8の `id1=ectips09` に変換されます。Short経由など、より細かい流入元を分けるときは、`?v=ec-tips-09&source_id=yt_short_photo_aar5wmqvi0` のように両方を付けます。
+
+GA4の `G-...` IDは推測・自動作成しません。`measurement.config.json` が空の現在はイベントが**未観測**であり、ゼロ件を意味しません。観測を有効にする一回限りの作業は、既存または新規のGA4プロパティで `https://interhiro.github.io/ec-hitori-tools/` 用Webデータストリームを選び、その公開Measurement IDを同設定ファイルに入れてデプロイすることです。流入別に集計するには、同じGA4プロパティで `source_id` をイベントスコープのカスタムディメンションとして登録します。
 
 ## 【運営者の要設定】これが済むまで収益はゼロ(2つだけ)
 

@@ -150,7 +150,7 @@ def render_checklist_page() -> str:
         <li class=\"check\">一度に3つ変えない。1つ直したら2週間そのまま置く</li>
       </ul>
       <h2>この先の更新を受け取る</h2>
-      <p>新しい動画の公開と、このチェックリストの更新版を先にお知らせします。<a class="list-cta" href="{form}">先行案内リストに登録する</a></p>"""
+      <p>新しい動画の公開と、このチェックリストの更新版を先にお知らせします。<a class="list-cta" href="{form}" data-list-signup="true">先行案内リストに登録する</a></p>"""
     return render_info_page(
         "開業チェックリスト",
         "ネットショップを開いて最初の1件が売れるまでにやること。24項目のチェックリスト。",
@@ -396,7 +396,7 @@ def build_html(
       </div>
       <p class="list-actions">
         <a class="list-cta" href="checklist.html">チェックリストを見る</a>
-        <a class="list-cta secondary" href="{list_form}">先行案内リストに登録する</a>
+        <a class="list-cta secondary" href="{list_form}" data-list-signup="true">先行案内リストに登録する</a>
       </p>
       <p class="list-note">新しい動画の公開と、チェックリストの更新版を先にお知らせします。登録は無料で、いつでも解除できます。</p>
     </section>

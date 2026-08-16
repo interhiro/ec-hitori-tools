@@ -209,6 +209,7 @@ def test_index_has_a_list_signup_with_a_working_prefilled_form():
     out = build_html(FIX_TOOLS, {"subid_param": "id1"})
     assert "先行案内" in out
     assert "docs.google.com/forms" in out
+    assert 'data-list-signup="true"' in out
     # 問い合わせフォームの必須項目をプリフィルで埋め、入力を名前とメールだけにする
     assert "entry.1096177863=" in out
     assert "entry.2024387457=" in out
@@ -218,3 +219,7 @@ def test_checklist_page_exposes_no_operator_identity():
     page = render_checklist_page()
     for label in ("<dt>運営者</dt>", "<dt>運営責任者</dt>", "運営："):
         assert label not in page
+
+
+def test_checklist_page_marks_the_list_form_for_measurement():
+    assert 'data-list-signup="true"' in render_checklist_page()
