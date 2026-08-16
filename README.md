@@ -10,7 +10,7 @@ YouTube連動サイト「ひとりネットショップ研究所」の**収益�
 YouTube動画 概要欄
   → https://interhiro.github.io/ec-hitori-tools/?v=<動画スラッグ>
       → LP(おすすめツール一覧)
-          → 各アフィリンクに ?utm_content=<動画スラッグ> を自動付与(track.js)
+          → 各アフィリンクに ?id1=<動画スラッグ> を自動付与(track.js)
               → ASP 管理画面の sub-id 別レポートで「成約した動画」が判明
 ```
 
@@ -46,7 +46,7 @@ node tests/track.test.js  # トラッキングのテスト
 - `python3 build.py` を再実行 → `data-monetized="true"` になる
 
 ### 2. YouTube動画を公開し、概要欄に下記リンクを貼る
-動画ごとにスラッグを変える(これが sub-id になる):
+動画ごとにスラッグを変える(これが A8 の id1 / sub-id になる):
 ```
 ▼ 動画で紹介したツールはこちら
 https://interhiro.github.io/ec-hitori-tools/?v=ec-tips-01
