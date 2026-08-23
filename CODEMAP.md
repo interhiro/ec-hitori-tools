@@ -45,3 +45,15 @@ index/articles                                   -> track.js
 ## Environment variables
 
 - なし。公開URLとsub-id名は `affiliate.config.json` で管理する。
+
+## 保留中の変更
+
+### BudouX(日本語改行整形)のビルド時適用 — 2026-08-23保留
+
+`build.py` を次に編集するときに同梱する。単独タスクとしては着手しない(LP流入がまだ積まれていないため、単体で時間を取る価値がない)。
+
+- 方式: `pip install budoux` してビルド時にZWSP(U+200B)を埋め込む。CDNもクライアントJSも使わない
+- 対象: 日本語見出し(`<h1>`/`<h2>`)。スマホ幅で不自然な位置に折れるのを防ぐ
+- 合格基準: `python3 -c "import budoux; print(budoux.load_default_japanese_parser().parse('開業から最初の1件が売れるまで、24項目'))"` が意味の切れ目で分割する、かつiPhone実機幅で見出しの折れ位置が改善する
+- 停止条件: ビルド時間が体感で伸びる、またはBudouXの既知issue(iOSで数字が`tel:`リンク化する)が自サイトで再現する
+- 未確認: ZWSP混入時のブラウザ内検索・コピペ・SEOの扱い。見出しに入れる場合はテストページで実測する
