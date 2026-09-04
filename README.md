@@ -26,6 +26,11 @@ YouTube動画 概要欄
 `affiliate_url` が空のツールは公式URLにフォールバックし、`data-monetized="false"` が付く
 (= まだ1円も生まない状態が一目で分かる)。
 
+## 動画のCTA
+
+Shortsの動画本体に入れる訴求は `videos/CTA-SPEC.md` で固定してある。
+位置・文言・`data-cta-role` 属性が決まっており、`python3 cta_contract.py` が検査する。
+
 ## ビルド
 
 ```sh
