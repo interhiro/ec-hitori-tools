@@ -11,8 +11,15 @@ Pillar B(YouTube「ひとりネットショップ研究所」×アフィリエ�
 公開前に必ず通す:
 
 ```sh
-python3 cta_contract.py          # CTA契約の検査(違反があると exit 1)
+python3 cta_contract.py          # 動画本体のCTA契約(違反があると exit 1)
 python3 -m pytest -q             # 全テスト
+```
+
+公開したあとは、概要欄側も必ず検査する。**動画本体のCTAと概要欄のLPリンクは別の穴で、
+前者だけ通しても収益導線は欠けうる**（2026-08-27に実際に起きた）。
+
+```sh
+python3 ~/projects/shimayama-ops/scripts/check_lp_link.py --recent 6
 ```
 
 HyperFramesの合成そのものを書くときは、各動画ディレクトリの`CLAUDE.md`の指示どおり

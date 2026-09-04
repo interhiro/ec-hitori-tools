@@ -94,6 +94,35 @@ python3 cta_contract.py              # videos/ 全体を走査
 python3 -m pytest tests/test_cta_contract.py
 ```
 
+## 概要欄のLPリンク（動画本体と同じく必須）
+
+**動画本体のCTAだけでは足りない。概要欄にLPリンクが無ければ、CTAは行き先の無い案内になる。**
+
+概要欄には必ず次を入れる。
+
+```
+https://interhiro.github.io/ec-hitori-tools/?v=<スラッグ>
+```
+
+- `?v=` は成果の帰属に使う。**無いとどの動画が売ったか分からない**ので、リンクだけ置いて識別子を省略しない
+- 長尺動画へのリンクを置く場合は、LPリンクと**併記**する。差し替えない
+
+検査:
+
+```sh
+python3 ~/projects/shimayama-ops/scripts/check_lp_link.py            # 全公開動画
+python3 ~/projects/shimayama-ops/scripts/check_lp_link.py --recent 6 # 直近6本
+```
+
+### なぜこの節があるか
+
+2026-08-27のCTA再設計で、概要欄の定型を「本編（長尺動画）へのリンク」に置き換えたとき、
+**LPリンクが差し替えで消えた。** 8/29のバッチ3 5本と8/31の1本、合わせて2,279再生分が、
+何回再生されても収益導線に到達しない状態になり、**9日間気づかれなかった**。
+
+`cta_contract.py` は `index.html` を見るため、YouTube側にある概要欄には届かない。
+だから検査を2本立てにしてある。**公開のたびに両方通す。**
+
 ## 判定基準(結果を見る前に凍結する)
 
 LP訴求の評価は、**この契約で公開したShortsの累計再生が3,000に達した時点**で行う。
