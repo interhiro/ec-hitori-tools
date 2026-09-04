@@ -11,9 +11,14 @@ Pillar B(YouTube「ひとりネットショップ研究所」×アフィリエ�
 公開前に必ず通す:
 
 ```sh
-python3 cta_contract.py          # 動画本体のCTA契約(違反があると exit 1)
+python3 publish_check.py         # 画像が主役か + 出所記録があるか(違反で exit 1)
+python3 cta_contract.py          # 動画本体のCTA契約(違反で exit 1)
 python3 -m pytest -q             # 全テスト
 ```
+
+**手本は `videos/product-size-photo`（2026-08-31）だけ。** `product-detail-photo` を手本にしない。
+**Claude Code に画像生成機能は無い。** 手段が無いと分かったら止まって確認する。
+CSS作図で代替してはいけない（2026-09-05に2本続けて差し戻された)。
 
 公開したあとは、概要欄側も必ず検査する。**動画本体のCTAと概要欄のLPリンクは別の穴で、
 前者だけ通しても収益導線は欠けうる**（2026-08-27に実際に起きた）。
