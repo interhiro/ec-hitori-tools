@@ -95,9 +95,9 @@ def render_info_page(title: str, description: str, body_html: str) -> str:
 
 
 
-# 先行案内リストの登録先。既存の問い合わせフォームの必須項目をプリフィルで
-# 埋め、利用者の入力を名前とメールだけにする。専用フォームを別途作るまでの形。
-LIST_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeDsCQpd38fypvmCOGcLqkk53tIVfbVa7mLBUScPQ8jBzxZiA/viewform?usp=pp_url&entry.1096177863=%E5%85%88%E8%A1%8C%E6%A1%88%E5%86%85%E3%83%AA%E3%82%B9%E3%83%88&entry.2024387457=%E6%96%B0%E3%81%97%E3%81%84%E5%8B%95%E7%94%BB%E3%81%A8%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%88%E6%9B%B4%E6%96%B0%E7%89%88%E3%81%AE%E5%85%88%E8%A1%8C%E6%A1%88%E5%86%85%E3%82%92%E5%B8%8C%E6%9C%9B%E3%81%97%E3%81%BE%E3%81%99"
+# 先行案内リストの登録先。2026-08-26、メール1項目の専用フォームに差し替え済み
+# （旧: 問い合わせフォームのプリフィル転用。名前必須で登録率が落ちるため解消）。
+LIST_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSePJWjEKIZovbTMl254cH8Kp4UWc2VQrwCt5cOpjcBQ6uGTqg/viewform"
 
 
 def render_checklist_page() -> str:

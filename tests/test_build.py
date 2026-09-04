@@ -204,15 +204,14 @@ def test_checklist_page_is_generated_with_all_sections():
     assert page.count('class="check"') >= 20
 
 
-def test_index_has_a_list_signup_with_a_working_prefilled_form():
+def test_index_has_a_list_signup_with_a_working_form():
     """再生が増えてもリスト導線が無ければ Day60 の合格条件を満たせない。"""
     out = build_html(FIX_TOOLS, {"subid_param": "id1"})
     assert "先行案内" in out
     assert "docs.google.com/forms" in out
     assert 'data-list-signup="true"' in out
-    # 問い合わせフォームの必須項目をプリフィルで埋め、入力を名前とメールだけにする
-    assert "entry.1096177863=" in out
-    assert "entry.2024387457=" in out
+    # 2026-08-26: メール1項目の専用フォームに差し替え済み（旧: 問い合わせフォームのプリフィル転用）
+    assert "1FAIpQLSePJWjEKIZovbTMl254cH8Kp4UWc2VQrwCt5cOpjcBQ6uGTqg" in out
 
 
 def test_checklist_page_exposes_no_operator_identity():
