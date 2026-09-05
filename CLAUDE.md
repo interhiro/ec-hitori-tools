@@ -17,8 +17,18 @@ python3 -m pytest -q             # 全テスト
 ```
 
 **手本は `videos/product-size-photo`（2026-08-31）だけ。** `product-detail-photo` を手本にしない。
-**Claude Code に画像生成機能は無い。** 手段が無いと分かったら止まって確認する。
 CSS作図で代替してはいけない（2026-09-05に2本続けて差し戻された)。
+
+画像は `image_pipeline.py` から作る。**Codexが既定、APIキーは代替**（2026-09-05に配線）。
+
+```sh
+python3 image_pipeline.py --prompt "..." --out videos/<slug>/assets/<name>.png --size 1024x1536
+```
+
+Codexの組み込み `image_gen` を先に試し、**未ログイン・利用上限のときだけ** `OPENAI_API_KEY`
+（環境変数 → keychain `openai` の順で解決）で `~/.codex/skills/.system/imagegen` のCLIに落ちる。
+出所は `ASSETS.md` に自動で追記される。**両方駄目なら exit 1 で止まる。CSS作図に落ちない。**
+Codexが `未ログイン` と出たら `codex login` を運用者に依頼する（本人認証なので代行できない）。
 
 公開したあとは、概要欄側も必ず検査する。**動画本体のCTAと概要欄のLPリンクは別の穴で、
 前者だけ通しても収益導線は欠けうる**（2026-08-27に実際に起きた）。

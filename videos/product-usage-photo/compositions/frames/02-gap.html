@@ -8,8 +8,9 @@
     .s1{left:74px;top:660px}.s2{left:566px;top:660px}
     .sn{position:absolute;left:34px;top:30px;font-size:34px;font-weight:700;color:#f0b400;letter-spacing:.14em}
     .sl{position:absolute;left:34px;top:96px;font-size:76px;font-weight:800;line-height:1.1}
-    .empty{position:absolute;left:34px;right:34px;bottom:44px;height:96px;border-radius:12px;background:rgba(246,241,232,.10)}
-    .cross{position:absolute;left:34px;right:34px;bottom:88px;height:7px;background:#f0b400;border-radius:4px;transform-origin:left center}
+    .empty{position:absolute;left:34px;right:34px;bottom:44px;height:150px;border-radius:12px;background:rgba(246,241,232,.10);overflow:hidden}
+    .empty img{position:absolute;width:744px;height:auto;left:-156px;top:-449px;display:block;opacity:.85}
+    .cross{position:absolute;left:34px;right:34px;bottom:115px;height:7px;background:#f0b400;border-radius:4px;transform-origin:left center}
     .bot{position:absolute;left:74px;right:74px;top:1290px;font-size:64px;font-weight:800;line-height:1.26}
     .bot em{font-style:normal;color:#f0b400}
     .tail{position:absolute;left:74px;top:1560px;font-size:40px;font-weight:700;color:rgba(246,241,232,.8)}
@@ -18,8 +19,8 @@
     <div id="f2-ground" class="clip" data-start="0" data-duration="14.9" data-track-index="0"></div>
     <div class="k" id="e2-k">買う直前</div>
     <div class="ttl" id="e2-t">最後に迷うのは<br>二つだけ</div>
-    <div class="slot s1" id="e2-s1"><div class="sn">01</div><div class="sl">大きさ</div><div class="empty"></div><div class="cross" id="e2-x1"></div></div>
-    <div class="slot s2" id="e2-s2"><div class="sn">02</div><div class="sl">似合うか</div><div class="empty"></div><div class="cross" id="e2-x2"></div></div>
+    <div class="slot s1" id="e2-s1"><div class="sn">01</div><div class="sl">大きさ</div><div class="empty" data-layout-allow-overflow><img src="assets/desk-product-only.png" alt="" /></div><div class="cross" id="e2-x1"></div></div>
+    <div class="slot s2" id="e2-s2"><div class="sn">02</div><div class="sl">似合うか</div><div class="empty" data-layout-allow-overflow><img src="assets/desk-product-only.png" alt="" /></div><div class="cross" id="e2-x2"></div></div>
     <div class="bot" id="e2-b">物だけの写真は、<br><em>そのどちらにも答えていない。</em></div>
     <div class="tail" id="e2-tl">だから「よさそう、だけど分からない」で止まる。</div>
   </div>

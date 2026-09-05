@@ -2,6 +2,11 @@
   "_comment": "トップに掲載する公開済みYouTube動画。新しい順。公開確認済みのIDだけを入れる。",
   "videos": [
     {
+      "id": "Pi9iWoXLjwM",
+      "title": "商品写真、使っているところが1枚もありませんか #Shorts",
+      "topic": "商品写真・使用シーン"
+    },
+    {
       "id": "83GEmnvhevw",
       "title": "ネットショップの作り方。BASEで開店するまでに決める4つ【ハンドメイド・個人】",
       "topic": "開業・BASE"
