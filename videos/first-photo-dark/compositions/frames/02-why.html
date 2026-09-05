@@ -1,0 +1,41 @@
+<template>
+  <style>
+    #f2-ground{position:absolute;inset:0;background:#1534c5}
+    #root{position:relative;width:1080px;height:1920px;overflow:hidden;color:#f6f1e8;font-family:"Noto Sans JP",system-ui,sans-serif}
+    .k{position:absolute;left:74px;top:150px;font-size:29px;font-weight:700;letter-spacing:.2em;color:rgba(246,241,232,.72)}
+    .ttl{position:absolute;left:74px;top:236px;font-size:106px;font-weight:800;line-height:1.06;letter-spacing:-.055em}
+    .shot{position:absolute;left:74px;top:620px;width:560px;height:520px;border-radius:20px;overflow:hidden;border:6px solid rgba(246,241,232,.35)}
+    .shot img{position:absolute;width:700px;height:auto;left:-70px;top:-330px;display:block}
+    .facts{position:absolute;left:672px;top:620px;width:334px}
+    .fact{margin-bottom:26px;padding:26px 24px;border-radius:16px;background:rgba(246,241,232,.12)}
+    .fact .n{font-size:28px;font-weight:800;color:#f0b400;letter-spacing:.14em}
+    .fact .v{margin-top:10px;font-size:40px;font-weight:800;line-height:1.2;white-space:nowrap}
+    .bot{position:absolute;left:74px;right:74px;top:1290px;font-size:60px;font-weight:800;line-height:1.26}
+    .bot em{font-style:normal;color:#f0b400}
+    .tail{position:absolute;left:74px;top:1560px;font-size:40px;font-weight:700;color:rgba(246,241,232,.82)}
+  </style>
+  <div id="root" data-composition-id="02-why" data-width="1080" data-height="1920" data-duration="15.736">
+    <div id="f2-ground" class="clip" data-start="0" data-duration="15.736" data-track-index="0"></div>
+    <div class="k" id="e2-k">原因</div>
+    <div class="ttl" id="e2-t">腕ではなく<br>光の問題</div>
+    <div class="shot" id="e2-p" data-layout-allow-overflow><img src="assets/dark-desk.png" alt="" /></div>
+    <div class="facts">
+      <div class="fact" id="e2-f1"><div class="n">01</div><div class="v">影が濃く出る</div></div>
+      <div class="fact" id="e2-f2"><div class="n">02</div><div class="v">色がくすむ</div></div>
+    </div>
+    <div class="bot" id="e2-b">天井の光は<br><em>一方向からしか当たらない。</em></div>
+    <div class="tail" id="e2-tl">だから実物と色が違って見えます。</div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({paused:true});
+    tl.fromTo("#e2-k,#e2-t",{autoAlpha:0,y:44},{autoAlpha:1,y:0,duration:.62,stagger:.12,ease:"power3.out"},0)
+      .fromTo("#e2-p",{autoAlpha:0,scale:.94},{autoAlpha:1,scale:1,duration:.66,ease:"power3.out"},2.0)
+      .fromTo("#e2-f1",{autoAlpha:0,x:60},{autoAlpha:1,x:0,duration:.55,ease:"power3.out"},5.2)
+      .fromTo("#e2-f2",{autoAlpha:0,x:60},{autoAlpha:1,x:0,duration:.55,ease:"power3.out"},7.0)
+      .fromTo("#e2-b",{autoAlpha:0,y:46},{autoAlpha:1,y:0,duration:.6,ease:"power3.out"},9.2)
+      .fromTo("#e2-tl",{autoAlpha:0},{autoAlpha:1,duration:.6,ease:"power2.out"},12.4);
+    window.__timelines["02-why"] = tl;
+  </script>
+</template>

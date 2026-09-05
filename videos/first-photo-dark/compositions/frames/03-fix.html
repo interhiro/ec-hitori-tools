@@ -1,0 +1,46 @@
+<template>
+  <style>
+    #f3-ground{position:absolute;inset:0;background:#f6f1e8}
+    #root{position:relative;width:1080px;height:1920px;overflow:hidden;color:#1534c5;font-family:"Noto Sans JP",system-ui,sans-serif}
+    .k{position:absolute;left:74px;top:150px;font-size:29px;font-weight:700;letter-spacing:.2em}
+    .ttl{position:absolute;left:74px;top:232px;font-size:104px;font-weight:800;line-height:1.06;letter-spacing:-.055em}
+    .frame{position:absolute;left:74px;top:600px;width:600px;height:604px;background:#fff;border-radius:20px;border:5px solid rgba(21,52,197,.16);overflow:hidden}
+    .pane{position:absolute;left:0;right:0;height:296px;overflow:hidden}
+    .pane img{position:absolute;height:auto;display:block}
+    .p1{top:0}
+    .p1 img{width:600px;left:0;top:-405px}
+    .p2{top:308px}
+    .p2 img{width:750px;left:-52px;top:-381px}
+    .plus{position:absolute;right:74px;top:640px;width:270px;padding:34px 0 30px;background:#1534c5;border-radius:26px;text-align:center;font-size:104px;font-weight:800;color:#f0b400;line-height:.94}
+    .plus small{display:block;font-size:38px;color:#f6f1e8;font-weight:800;letter-spacing:.02em;margin-top:12px}
+    .chips{position:absolute;left:74px;top:1250px;width:932px}
+    .chip{display:inline-block;margin:0 14px 16px 0;padding:18px 30px;border:5px solid #1534c5;border-radius:999px;font-size:42px;font-weight:800}
+    .band{position:absolute;left:0;right:0;top:1540px;padding:48px 74px;background:#1534c5;color:#f6f1e8}
+    .band .t{font-size:56px;font-weight:800;line-height:1.26}
+  </style>
+  <div id="root" data-composition-id="03-fix" data-width="1080" data-height="1920" data-duration="14.985">
+    <div id="f3-ground" class="clip" data-start="0" data-duration="14.985" data-track-index="0"></div>
+    <div class="k" id="e3-k">手順</div>
+    <div class="ttl" id="e3-t">窓際に移して<br>白い紙を1枚</div>
+    <div class="frame" id="e3-f">
+      <div class="pane p1" id="e3-h" data-layout-allow-overflow><img src="assets/paper-setup.png" alt="" /></div><div class="pane p2" id="e3-c" data-layout-allow-overflow><img src="assets/bright-window.png" alt="" /></div>
+    </div>
+    <div class="plus" id="e3-p">紙1<small>枚だけ</small></div>
+    <div class="chips" id="e3-ch">
+      <span class="chip">窓際</span><span class="chip">白い紙を立てる</span><span class="chip">カーテン越し</span>
+    </div>
+    <div class="band" id="e3-b"><div class="t">照明も撮影ボックスも<br>要りません。</div></div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({paused:true});
+    tl.fromTo("#e3-k,#e3-t",{autoAlpha:0,y:44},{autoAlpha:1,y:0,duration:.62,stagger:.12,ease:"power3.out"},0)
+      .fromTo("#e3-f",{autoAlpha:0,scale:.93},{autoAlpha:1,scale:1,duration:.66,ease:"power3.out"},1.8)
+      .fromTo("#e3-h,#e3-c",{autoAlpha:0,y:120},{autoAlpha:1,y:0,duration:.7,stagger:.34,ease:"power3.out"},4.2)
+      .fromTo("#e3-p",{autoAlpha:0,scale:.3,rotation:-16},{autoAlpha:1,scale:1,rotation:0,duration:.7,ease:"back.out(1.7)"},7.2)
+      .fromTo("#e3-ch",{autoAlpha:0,y:40},{autoAlpha:1,y:0,duration:.6,ease:"power3.out"},9.0)
+      .fromTo("#e3-b",{autoAlpha:0,y:70},{autoAlpha:1,y:0,duration:.66,ease:"power3.out"},11.0);
+    window.__timelines["03-fix"] = tl;
+  </script>
+</template>

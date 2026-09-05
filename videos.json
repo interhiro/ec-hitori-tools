@@ -2,6 +2,11 @@
   "_comment": "トップに掲載する公開済みYouTube動画。新しい順。公開確認済みのIDだけを入れる。",
   "videos": [
     {
+      "id": "T7anwSUxkw8",
+      "title": "1枚目が暗いだけで、一覧で飛ばされています #Shorts",
+      "topic": "商品写真・光"
+    },
+    {
       "id": "Pi9iWoXLjwM",
       "title": "商品写真、使っているところが1枚もありませんか #Shorts",
       "topic": "商品写真・使用シーン"
