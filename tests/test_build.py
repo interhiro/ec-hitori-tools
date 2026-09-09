@@ -321,3 +321,23 @@ def test_index_hero_cta_leads_into_the_site_not_back_to_youtube():
     hero = re.search(r'<a class="hero-cta" href="([^"]+)"', out)
     assert hero, "hero-cta が見つからない"
     assert hero.group(1) == "checklist.html", f"hero-cta が {hero.group(1)} を指している"
+
+
+# --- Search Console 認証ファイルのガード（2026-09-09） ---
+# このファイルが消えるとプロパティの認証が外れ、検索パフォーマンスのデータが
+# 取れなくなる。しかもサイト側は何のエラーも出さないため気づけない。
+
+def test_search_console_verification_file_is_present():
+    """GSC認証ファイルを消さない。
+
+    プロパティは URLプレフィックス https://interhiro.github.io/ec-hitori-tools/ で、
+    認証ファイルはリポジトリ直下（= プロパティ直下）に置く必要がある。
+    """
+    here = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    name = "google3c5717818d1af74a.html"
+    path = os.path.join(here, name)
+    assert os.path.exists(path), f"{name} が無い。GSCの認証が外れる"
+    with open(path, encoding="utf-8") as f:
+        body = f.read().strip()
+    # Google はファイル名と一致する1行を要求する
+    assert body == f"google-site-verification: {name}", f"中身が想定と違う: {body!r}"
