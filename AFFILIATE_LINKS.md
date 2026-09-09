@@ -16,7 +16,7 @@ BASE・カラーミー・freee・minne・ラクスルが全てA8にあり、afb�
 | colormeshop | カラーミーショップ | A8.net | 申請済み(2026-08-12) | 個人事業主・中小企業にぴったり！理想のオリジナルネットショップが作れます。<br>
 【 <A href="https://px.a8.net/svt/ejp?a8mat=4BA419+E1H6RU+348+I2I7M" rel="nofollow">カラーミーショップ</A> 】
 <img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=4BA419+E1H6RU+348+I2I7M" alt="">|
-| freee | freee会計 | A8.net | **広告掲載URL提出待ち**(申請2026-08-12) | |
+| freee | freee会計 | A8.net | **リンク撤去済み**(提携先が freee予約 で商品不一致) | |
 | minne | minne | A8.net | 申請済み(2026-08-12) |<a href="https://px.a8.net/svt/ejp?a8mat=4BA419+EOP3D6+348+2BCWEQ" rel="nofollow">minne</a>
 <img border="0" width="1" height="1" src="https://www14.a8.net/0.gif?a8mat=4BA419+EOP3D6+348+2BCWEQ" alt=""> |
 | rakusul | ラクスル | A8.net | **承認待ち**(申請2026-08-12) | |
@@ -46,15 +46,20 @@ freee の広告掲載URLとして提出するのは、freee リンクが実在�
 | base | `thebase.com/?...&a8=<token>` | OK |
 | colormeshop | `shop-pro.jp/lp/202305/?...&a8=<token>` | OK |
 | minne | `minne.com/?a8` | OK |
-| freee | `px.a8.net/qr_code/qr_code.html?rawquerystring=...` | **NG** |
+| freee | モバイル→`apps.apple.com/JP/app/id1519383709`（**freee予約**アプリ） / PC→`px.a8.net/qr_code/` | **撤去済み** |
 
-**freee のリンクはスマートデバイス専用。** PCからクリックすると「このページはスマートデバイス専用URLです。」の
-QRコードページで行き止まりになる。URLの形式は他と同じ `px.a8.net/svt/ejp?a8mat=...` で、
-`grep` でも目視でも区別がつかない。**クリックして着地先を読むまで分からない。**
+**freee のリンクは商品が違った（2026-09-09 撤去）。** `a8mat=4BA419+E2O1ZE+5UY6+5YRHE` の着地先は
+モバイルが `apps.apple.com/JP/app/id1519383709` = **freee予約**（freee k.k. のネット予約システムアプリ）、
+PCは `px.a8.net/qr_code/` で行き止まり。
 
-YouTube Shorts 流入は大半がモバイルのため実害は限定的だが、PC訪問者は購入導線を失う。
+LP側は「freee会計 / 確定申告・請求・経費を自動化」、チェックリストは「開業届・青色申告・売上用口座」と
+書いていたため、**広告文と遷移先が別商品**だった。`tools.json` の `affiliate_url` を空にして撤去済み
+（公式 `freee.co.jp` へフォールバック、`data-monetized="false"`）。
 
-**やること（運営者）: A8管理画面で freee のPC用リンクを取得する。** ログイン後の画面操作と転記は Claude が代行できる。
+`a8sns=youtube` / `a8sns=note` の派生リンクも同じ a8mat なので着地先は同じ。使えない。
+
+**やること（運営者）: A8で freee会計 のプログラムを探して別途提携する。** freee は会計・人事労務・予約で
+プログラムが分かれている。承認後に正規リンクを貼り直す。
 
 確認コマンド（リンクを差し替えたら必ず実行する）:
 
@@ -63,7 +68,16 @@ UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, l
 curl -s -A "$UA" -L -o /dev/null -w "%{url_effective}\n" "<A8のURL>&id1=verify"
 ```
 
-着地先に `qr_code` が含まれていたらスマートデバイス専用リンク。取り直す。
+判定は2段階で行う。**片方だけでは不十分。**
+
+1. 着地先に `qr_code` が含まれていたらスマートデバイス専用リンク。取り直す
+2. **着地先が、LPで広告している商品と同じか目視する。** freee のように同一社が複数プログラムを
+   持つ場合、リンク形式は同じでも別商品に着地する。モバイルUA でも同じ確認をする
+
+```bash
+SP="Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1"
+curl -s -A "$SP" -L -o /dev/null -w "%{url_effective}\n" "<A8のURL>&id1=verify"
+```
 
 ### チェックリストページの収益導線（2026-09-09 追加）
 
