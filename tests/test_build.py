@@ -198,7 +198,7 @@ def test_operator_page_rows_are_limited_to_the_approved_set():
 
 def test_checklist_page_is_generated_with_all_sections():
     """リスト登録の理由になる公開資産。動画10本の内容を1枚に畳んだもの。"""
-    page = render_checklist_page()
+    page = render_checklist_page(FIX_TOOLS_SLOTTED, FIX_CFG)
     for heading in ("開業前", "商品を決める", "ショップを作る", "商品ページ", "公開前", "公開後"):
         assert heading in page, heading
     assert page.count('class="check"') >= 20
@@ -215,10 +215,109 @@ def test_index_has_a_list_signup_with_a_working_form():
 
 
 def test_checklist_page_exposes_no_operator_identity():
-    page = render_checklist_page()
+    page = render_checklist_page(FIX_TOOLS_SLOTTED, FIX_CFG)
     for label in ("<dt>運営者</dt>", "<dt>運営責任者</dt>", "運営："):
         assert label not in page
 
 
 def test_checklist_page_marks_the_list_form_for_measurement():
-    assert 'data-list-signup="true"' in render_checklist_page()
+    assert 'data-list-signup="true"' in render_checklist_page(FIX_TOOLS_SLOTTED, FIX_CFG)
+
+
+# --- 2026-09-09: checklist.html に収益導線と計測が無かった件の回帰テスト ---
+# 発覚時の実測: grep -c "px.a8.net" checklist.html → 0 / track.js の読み込み → 無し。
+# サイト内で最も購買意欲が高いページ（開業届・決済方法・特商法表記の章を持つ）に
+# クリックできる場所が1つも無く、置いても計測されない状態だった。
+
+FIX_TOOLS_SLOTTED = {
+    "tools": [
+        {"id": "base", "name": "BASE", "category": "ネットショップ開設", "blurb": "b",
+         "official_url": "https://thebase.com/", "affiliate_url": "https://aff.example/base?x=1"},
+        {"id": "freee", "name": "freee会計", "category": "会計", "blurb": "f",
+         "official_url": "https://www.freee.co.jp/", "affiliate_url": "https://aff.example/freee?x=2"},
+    ]
+}
+
+
+def test_checklist_page_loads_the_tracking_script():
+    """track.js が無ければ affiliate_click も list_signup も発火しない。
+
+    data-list-signup は以前から付いていたが、スクリプト自体が読まれていなかったため
+    チェックリスト経由のリスト登録も計測されていなかった。
+    """
+    assert '<script src="track.js"></script>' in render_checklist_page(FIX_TOOLS_SLOTTED, FIX_CFG)
+
+
+def test_checklist_page_places_monetized_links_in_section_context():
+    """章の文脈に、その章で必要になる道具を置く。
+
+    index.html のツールセクションは6枚並列で affiliate_click 0 だった。
+    チェックリストは章ごとに「いま何をするか」が確定しているため章の直後に置く。
+    """
+    page = render_checklist_page(FIX_TOOLS_SLOTTED, FIX_CFG)
+    links = re.findall(r'<a class="cta" href="([^"]+)"', page)
+    assert len(links) == 2, f"収益導線が {len(links)} 本: {links}"
+    # track.js は a.cta[data-base-href] だけを拾う
+    assert page.count("data-base-href=") == len(links)
+    # 章の見出しより後ろに置く（見出しの前に出すと文脈が壊れる）
+    assert page.index("開業前") < page.index("aff.example/freee")
+    assert page.index("ショップを作る") < page.index("aff.example/base")
+
+
+def test_checklist_page_skips_tools_without_an_affiliate_url():
+    """affiliate_url が空の道具を章に置くと、公式サイトへの無償送客になる。
+
+    FIX_TOOLS の base は affiliate_url が空。リンクを出してはいけない。
+    """
+    page = render_checklist_page(FIX_TOOLS, FIX_CFG)
+    hrefs = re.findall(r'<a class="cta" href="([^"]+)"', page)
+    assert "https://thebase.com/" not in hrefs, f"未収益化の公式URLを置いている: {hrefs}"
+
+
+def test_checklist_page_links_carry_the_sponsored_rel():
+    """index.html のツールカードと同じ rel に揃える。"""
+    page = render_checklist_page(FIX_TOOLS_SLOTTED, FIX_CFG)
+    assert page.count('rel="nofollow sponsored noopener"') == page.count("data-base-href=")
+
+
+def test_checklist_page_uses_its_own_subid_so_conversions_are_separable():
+    """動画経由と検索経由の成果を ASP 側で切り分ける。
+
+    articles_build.py が article-<slug> を使うのと同じ意図。
+    """
+    page = render_checklist_page(FIX_TOOLS_SLOTTED, FIX_CFG)
+    assert 'data-default-subid="checklist"' in page
+    # subid_param は cfg 由来。実運用は affiliate.config.json の "id1"(A8のパラメータ計測)
+    assert 'data-subid-param="utm_content"' in page
+    assert 'data-subid-param="id1"' in render_checklist_page(
+        FIX_TOOLS_SLOTTED, {"subid_param": "id1"}
+    )
+
+
+def test_checklist_page_discloses_advertising():
+    """リンクを置くなら広告表記を同じページに出す。"""
+    page = render_checklist_page(FIX_TOOLS_SLOTTED, FIX_CFG)
+    assert "広告" in page
+
+
+def test_checklist_page_requires_tools_so_monetization_cannot_be_dropped_silently():
+    """引数を省略できると、収益導線の無いページが黙って生成されうる。
+
+    フォールバックで空のページを返す実装にはしない（失敗を隠さない）。
+    """
+    try:
+        render_checklist_page()
+    except TypeError:
+        return
+    raise AssertionError("引数なしで呼べてしまう。収益導線の欠落が黙って通る")
+
+
+def test_index_hero_cta_leads_into_the_site_not_back_to_youtube():
+    """YouTube の概要欄から来た人に、最初の選択肢として YouTube を出さない。
+
+    発覚時: hero-cta が #latest-videos（動画グリッド＝各カードが youtube.com へ外部遷移）。
+    """
+    out = build_html(FIX_TOOLS, FIX_CFG)
+    hero = re.search(r'<a class="hero-cta" href="([^"]+)"', out)
+    assert hero, "hero-cta が見つからない"
+    assert hero.group(1) == "checklist.html", f"hero-cta が {hero.group(1)} を指している"

@@ -244,3 +244,37 @@ footer { padding: 38px 24px; border-top: 1px solid var(--line); background: var(
   border: 2px solid var(--accent);
   border-radius: 4px;
 }
+
+/* 2026-09-09: 開業チェックリストの章内に置く収益導線。
+   章の作業に必要な道具を1枚だけ出す。カード群(.grid .card)とは別扱いで、
+   リストの流れを切らずに読み進められる高さに抑える。 */
+.inline-tool {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin: 0 0 28px;
+  padding: 16px 18px;
+  border: 1px solid #cbd8f7;
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  background: var(--surface-soft);
+}
+.inline-tool-note {
+  flex: 1 1 240px;
+  color: #3f4b61;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.inline-tool .cta { flex: 0 0 auto; }
+.ad-label {
+  flex: 0 0 auto;
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+}

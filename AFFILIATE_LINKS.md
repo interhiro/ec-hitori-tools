@@ -21,6 +21,41 @@ BASE・カラーミー・freee・minne・ラクスルが全てA8にあり、afb�
 <img border="0" width="1" height="1" src="https://www14.a8.net/0.gif?a8mat=4BA419+EOP3D6+348+2BCWEQ" alt=""> |
 | rakusul | ラクスル | A8.net | 申請済み(2026-08-12) | |
 
+## 実測済みの着地先（2026-09-09、デスクトップUAでクリック確認）
+
+| id | 着地先 | 判定 |
+|---|---|---|
+| base | `thebase.com/?...&a8=<token>` | OK |
+| colormeshop | `shop-pro.jp/lp/202305/?...&a8=<token>` | OK |
+| minne | `minne.com/?a8` | OK |
+| freee | `px.a8.net/qr_code/qr_code.html?rawquerystring=...` | **NG** |
+
+**freee のリンクはスマートデバイス専用。** PCからクリックすると「このページはスマートデバイス専用URLです。」の
+QRコードページで行き止まりになる。URLの形式は他と同じ `px.a8.net/svt/ejp?a8mat=...` で、
+`grep` でも目視でも区別がつかない。**クリックして着地先を読むまで分からない。**
+
+YouTube Shorts 流入は大半がモバイルのため実害は限定的だが、PC訪問者は購入導線を失う。
+
+**やること（運営者）: A8管理画面で freee のPC用リンクを取得する。** ログイン後の画面操作と転記は Claude が代行できる。
+
+確認コマンド（リンクを差し替えたら必ず実行する）:
+
+```bash
+UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36"
+curl -s -A "$UA" -L -o /dev/null -w "%{url_effective}\n" "<A8のURL>&id1=verify"
+```
+
+着地先に `qr_code` が含まれていたらスマートデバイス専用リンク。取り直す。
+
+### チェックリストページの収益導線（2026-09-09 追加）
+
+`checklist.html` は章の直後に1枚だけCTAを置く。対応は `build.py` の `CHECKLIST_TOOL_SLOTS`:
+
+- 「開業前」章 → **freee**（開業届・青色申告・売上用口座）
+- 「ショップを作る」章 → **BASE**（決済・URL・特商法表記）
+
+subid は `checklist` 固定（動画経由の `?v=`、記事経由の `article-<slug>` と成果を切り分けるため）。
+
 ### 申請していないもの（記録）
 
 | ツール | 理由 |
