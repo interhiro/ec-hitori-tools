@@ -16,10 +16,28 @@ BASE・カラーミー・freee・minne・ラクスルが全てA8にあり、afb�
 | colormeshop | カラーミーショップ | A8.net | 申請済み(2026-08-12) | 個人事業主・中小企業にぴったり！理想のオリジナルネットショップが作れます。<br>
 【 <A href="https://px.a8.net/svt/ejp?a8mat=4BA419+E1H6RU+348+I2I7M" rel="nofollow">カラーミーショップ</A> 】
 <img border="0" width="1" height="1" src="https://www16.a8.net/0.gif?a8mat=4BA419+E1H6RU+348+I2I7M" alt="">|
-| freee | freee会計 | A8.net | 申請済み(2026-08-12) | |
+| freee | freee会計 | A8.net | **広告掲載URL提出待ち**(申請2026-08-12) | |
 | minne | minne | A8.net | 申請済み(2026-08-12) |<a href="https://px.a8.net/svt/ejp?a8mat=4BA419+EOP3D6+348+2BCWEQ" rel="nofollow">minne</a>
 <img border="0" width="1" height="1" src="https://www14.a8.net/0.gif?a8mat=4BA419+EOP3D6+348+2BCWEQ" alt=""> |
-| rakusul | ラクスル | A8.net | 申請済み(2026-08-12) | |
+| rakusul | ラクスル | A8.net | **承認待ち**(申請2026-08-12) | |
+
+### 提携ステータスの実態（2026-09-09 A8管理画面で確認）
+
+表の「申請済み(2026-08-12)」は**申請日**であって提携成立ではない。混同しないこと。
+
+| ツール | 状態 | 成果報酬 |
+|---|---|---|
+| ラクスル | **承認待ち**（申込中プログラム s00000013809001） | 注文(税抜)の5%。EPC 13.92 / 確定率 92.44% |
+| freee | **広告掲載URLの提出が必要**（承認前） | 未確認 |
+| BASE / カラーミー / minne | リンク発行済み・稼働中 | 未確認 |
+
+ラクスルは注文単価¥5,000で報酬¥250、¥10,000でも¥500。**単価の実態を把握してから主役の案件を決める。**
+
+freee の広告掲載URLとして提出するのは、freee リンクが実在する本番3ページ（2026-09-09 実測・各1本・HTTP200）:
+
+- `https://interhiro.github.io/ec-hitori-tools/`
+- `https://interhiro.github.io/ec-hitori-tools/checklist.html`
+- `https://interhiro.github.io/ec-hitori-tools/articles/tools-before-automation.html`
 
 ## 実測済みの着地先（2026-09-09、デスクトップUAでクリック確認）
 
