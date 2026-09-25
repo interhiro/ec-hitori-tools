@@ -63,10 +63,18 @@ def render_video_cards(videos: list[dict]) -> str:
     return "\n".join(cards)
 
 
-def render_info_page(title: str, description: str, body_html: str) -> str:
-    """運営者情報・ポリシー等の固定ページを完全なHTMLとして返す。"""
+def render_info_page(
+    title: str, description: str, body_html: str, include_tracking: bool = False
+) -> str:
+    """運営者情報・ポリシー等の固定ページを完全なHTMLとして返す。
+
+    ``include_tracking`` を立てたページだけ ``track.js`` を読む。ポリシー系は
+    収益導線が無いので不要。収益導線を持つページで落とすと、リンクは表示されるのに
+    ``affiliate_click`` も ``list_signup`` も発火しない（2026-09-09 の欠陥）。
+    """
     safe_title = html.escape(title)
     safe_description = html.escape(description, quote=True)
+    tracking = '  <script src="track.js"></script>\n' if include_tracking else ""
     return f'''<!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -89,18 +97,67 @@ def render_info_page(title: str, description: str, body_html: str) -> str:
   </main>
 
 {render_footer()}
-</body>
+{tracking}</body>
 </html>
 '''
 
 
 
-# 先行案内リストの登録先。既存の問い合わせフォームの必須項目をプリフィルで
-# 埋め、利用者の入力を名前とメールだけにする。専用フォームを別途作るまでの形。
-LIST_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeDsCQpd38fypvmCOGcLqkk53tIVfbVa7mLBUScPQ8jBzxZiA/viewform?usp=pp_url&entry.1096177863=%E5%85%88%E8%A1%8C%E6%A1%88%E5%86%85%E3%83%AA%E3%82%B9%E3%83%88&entry.2024387457=%E6%96%B0%E3%81%97%E3%81%84%E5%8B%95%E7%94%BB%E3%81%A8%E3%83%81%E3%82%A7%E3%83%83%E3%82%AF%E3%83%AA%E3%82%B9%E3%83%88%E6%9B%B4%E6%96%B0%E7%89%88%E3%81%AE%E5%85%88%E8%A1%8C%E6%A1%88%E5%86%85%E3%82%92%E5%B8%8C%E6%9C%9B%E3%81%97%E3%81%BE%E3%81%99"
+# 先行案内リストの登録先。2026-08-26、メール1項目の専用フォームに差し替え済み
+# （旧: 問い合わせフォームのプリフィル転用。名前必須で登録率が落ちるため解消）。
+LIST_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSePJWjEKIZovbTMl254cH8Kp4UWc2VQrwCt5cOpjcBQ6uGTqg/viewform"
 
 
-def render_checklist_page() -> str:
+# チェックリストの章と、その章で実際に必要になる道具の対応。
+# index.html のツールセクションは6枚並列で affiliate_click が 0 だったため、
+# ここでは「いま何をするか」が確定している章の直後に1枚だけ置く。
+# 増やすときは、その章の作業に本当に要る道具かで判断する。数を増やす方向には広げない。
+CHECKLIST_TOOL_SLOTS = (
+    ("kaigyo", "freee", "開業届・青色申告・売上用口座のまわりをまとめて片付けるなら"),
+    ("shop", "base", "決済・URL・特定商取引法の表記を最短でそろえるなら"),
+)
+
+# チェックリスト経由の成果を、動画経由(?v=)や記事経由(article-<slug>)と
+# ASP 側で切り分けるための既定 subid。
+CHECKLIST_SUBID = "checklist"
+
+
+def render_inline_tool(tool: dict, cfg: dict, note: str) -> str:
+    """章の文脈に置く1枚のCTA。収益化されていない道具は何も返さない。
+
+    affiliate_url が空のものを置くと公式サイトへの無償送客になるため、
+    公式URLへのフォールバックはここでは行わない(index.html のカードとは方針が違う)。
+    """
+    aff = (tool.get("affiliate_url") or "").strip()
+    if not aff:
+        return ""
+    href = html.escape(aff, quote=True)
+    name = html.escape(tool.get("name", ""))
+    subid_param = html.escape(cfg.get("subid_param", "utm_content"), quote=True)
+    return (
+        '      <p class="inline-tool">\n'
+        f'        <span class="inline-tool-note">{html.escape(note)}</span>\n'
+        f'        <a class="cta" href="{href}" target="_blank" rel="nofollow sponsored noopener"\n'
+        f'           data-base-href="{href}" data-subid-param="{subid_param}"'
+        f' data-default-subid="{CHECKLIST_SUBID}">\n'
+        f'          {name} を見る →\n'
+        '        </a>\n'
+        '        <span class="ad-label">広告</span>\n'
+        '      </p>'
+    )
+
+
+def render_checklist_slots(tools_data: dict, cfg: dict) -> dict[str, str]:
+    """章キー -> インラインCTAのHTML。該当する道具が未収益化なら空文字。"""
+    by_id = {t.get("id"): t for t in tools_data.get("tools", [])}
+    slots = {}
+    for slot_key, tool_id, note in CHECKLIST_TOOL_SLOTS:
+        tool = by_id.get(tool_id)
+        slots[slot_key] = render_inline_tool(tool, cfg, note) if tool else ""
+    return slots
+
+
+def render_checklist_page(tools_data: dict, cfg: dict) -> str:
     """公開済み動画10本の内容を1枚に畳んだチェックリスト。
 
     リストに登録する理由がなければ登録は起きない。これはその理由であり、
@@ -116,6 +173,7 @@ def render_checklist_page() -> str:
         <li class=\"check\">青色申告承認申請書を同じ日に出す（原則3月15日、年の途中の開業なら2か月以内）</li>
         <li class=\"check\">売上を受け取る銀行口座を用意する（個人の口座で始められる）</li>
       </ul>
+{slot_kaigyo}
       <h2>商品を決める</h2>
       <ul class=\"checklist\">
         <li class=\"check\">同じものを、あと10個用意できるか</li>
@@ -130,6 +188,7 @@ def render_checklist_page() -> str:
         <li class=\"check\">決済方法を選ぶ（クレジットカードは必ず入れる）</li>
         <li class=\"check\">特定商取引法に基づく表記に書く内容をそろえる</li>
       </ul>
+{slot_shop}
       <h2>商品ページ</h2>
       <ul class=\"checklist\">
         <li class=\"check\">写真を3枚そろえる（全体・寄り・使っている場面）</li>
@@ -150,11 +209,18 @@ def render_checklist_page() -> str:
         <li class=\"check\">一度に3つ変えない。1つ直したら2週間そのまま置く</li>
       </ul>
       <h2>この先の更新を受け取る</h2>
-      <p>新しい動画の公開と、このチェックリストの更新版を先にお知らせします。<a class="list-cta" href="{form}" data-list-signup="true">先行案内リストに登録する</a></p>"""
+      <p>新しい動画の公開と、このチェックリストの更新版を先にお知らせします。<a class="list-cta" href="{form}" data-list-signup="true">先行案内リストに登録する</a></p>
+      <p class="disclosure">※ 当ページのリンクには広告(アフィリエイト)を含みます。リンク経由の申込み等で運営者が報酬を受け取る場合があります。</p>"""
+    slots = render_checklist_slots(tools_data, cfg)
     return render_info_page(
         "開業チェックリスト",
         "ネットショップを開いて最初の1件が売れるまでにやること。24項目のチェックリスト。",
-        body.format(form=LIST_FORM_URL),
+        body.format(
+            form=LIST_FORM_URL,
+            slot_kaigyo=slots["kaigyo"],
+            slot_shop=slots["shop"],
+        ),
+        include_tracking=True,
     )
 
 def render_policy_pages() -> dict[str, str]:
@@ -383,7 +449,7 @@ def build_html(
     <span class="eyebrow">ひとり運営の実務チャンネル</span>
     <h1>動画で学び、<br>使う道具をここで選ぶ。</h1>
     <p>ネットショップとハンドメイド販売を、ひとりで回す人へ。<br>動画の要点、公式情報、紹介ツールを一か所にまとめました。</p>
-    <a class="hero-cta" href="#latest-videos">最新動画を見る ↓</a>
+    <a class="hero-cta" href="checklist.html">開業チェックリストを見る</a>
   </header>
 
   <main>
@@ -438,7 +504,7 @@ def main() -> None:
     with open(os.path.join(HERE, "index.html"), "w", encoding="utf-8") as f:
         f.write(out)
     pages = dict(render_policy_pages())
-    pages["checklist.html"] = render_checklist_page()
+    pages["checklist.html"] = render_checklist_page(tools_data, cfg)
     for filename, page in pages.items():
         with open(os.path.join(HERE, filename), "w", encoding="utf-8") as f:
             f.write(page)

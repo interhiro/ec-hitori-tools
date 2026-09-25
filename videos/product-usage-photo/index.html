@@ -1,0 +1,36 @@
+<!doctype html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=1080,height=1920">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+*{box-sizing:border-box}
+html,body,#root{margin:0;width:1080px;height:1920px;overflow:hidden;background:#f6f1e8}
+.scene{position:absolute;inset:0}
+#cta-mid{position:absolute;left:66px;right:66px;top:1640px;padding:30px 34px;background:#f6f1e8;border:6px solid #1534c5;border-radius:18px;color:#1534c5;font-family:"Noto Sans JP",system-ui,sans-serif;font-size:46px;font-weight:800;line-height:1.32;text-align:center}
+</style></head><body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="45.009" data-width="1080" data-height="1920">
+
+<div id="f1" class="scene" data-composition-id="01-hook" data-composition-src="compositions/frames/01-hook.html" data-start="0" data-duration="9.23"></div>
+<audio id="v1" src="audio/line-01.wav" data-start="0" data-duration="9.23" data-volume="1"></audio>
+
+<div id="f2" class="scene" data-composition-id="02-gap" data-composition-src="compositions/frames/02-gap.html" data-start="9.23" data-duration="14.898"></div>
+<audio id="v2" src="audio/line-02.wav" data-start="9.23" data-duration="14.898" data-volume="1"></audio>
+
+<div id="f3" class="scene" data-composition-id="03-fix" data-composition-src="compositions/frames/03-fix.html" data-start="24.128" data-duration="14.035"></div>
+<audio id="v3" src="audio/line-03.wav" data-start="24.128" data-duration="14.035" data-volume="1"></audio>
+
+<div id="f4" class="scene" data-composition-id="04-cta" data-composition-src="compositions/frames/04-cta.html" data-start="38.163" data-duration="6.846" data-cta-role="end-subscribe"></div>
+<audio id="v4" src="audio/line-04.wav" data-start="38.163" data-duration="6.846" data-volume="1"></audio>
+
+<div id="cta-mid" class="clip" data-cta-role="midpoint-lp" data-start="13.5" data-duration="2.0" data-track-index="9" data-layout-allow-overlap="true">使うツールと手順は<br>概要欄にまとめてあります</div>
+
+</div>
+<script>
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({paused:true});
+tl.fromTo('#f2',{autoAlpha:0},{autoAlpha:1,duration:.4,ease:'power2.inOut'},9.23)
+  .fromTo('#f3',{autoAlpha:0},{autoAlpha:1,duration:.4,ease:'power2.inOut'},24.128)
+  .fromTo('#f4',{autoAlpha:0},{autoAlpha:1,duration:.4,ease:'power2.inOut'},38.163)
+  .fromTo('#cta-mid',{autoAlpha:0,y:26},{autoAlpha:1,y:0,duration:.28,ease:'power3.out'},13.5)
+  .to('#cta-mid',{autoAlpha:0,duration:.28,ease:'power2.in'},15.22)
+  .to({},{duration:45.009},0);
+window.__timelines.main = tl;
+</script></body></html>

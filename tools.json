@@ -31,7 +31,8 @@
       "category": "会計・バックオフィス",
       "blurb": "確定申告・請求・経費を自動化。一人社長の事務時間を最小化する。",
       "official_url": "https://www.freee.co.jp/",
-      "affiliate_url": ""
+      "affiliate_url": "",
+      "_note": "2026-09-09: A8の a8mat=4BA419+E2O1ZE+5UY6+5YRHE は freee会計ではなく **freee予約**(ネット予約システム/iOS App Store id1519383709)へ着地するため撤去した。PCからは px.a8.net/qr_code/ で行き止まり。freee会計のプログラムに別途提携してから貼り直す。"
     },
     {
       "id": "rakusul",

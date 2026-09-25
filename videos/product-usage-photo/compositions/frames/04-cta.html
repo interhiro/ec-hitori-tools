@@ -1,0 +1,30 @@
+<template>
+  <style>
+    #f4-ground{position:absolute;inset:0;background:#1534c5}
+    #root{position:relative;width:1080px;height:1920px;overflow:hidden;color:#f6f1e8;font-family:"Noto Sans JP",system-ui,sans-serif}
+    .k{position:absolute;left:74px;top:560px;font-size:30px;font-weight:700;letter-spacing:.22em;color:#f0b400}
+    .ttl{position:absolute;left:74px;top:650px;font-size:150px;font-weight:800;line-height:.98;letter-spacing:-.06em}
+    .sub{position:absolute;left:74px;top:1030px;font-size:56px;font-weight:700;line-height:1.35;color:rgba(246,241,232,.9)}
+    .rule{position:absolute;left:74px;top:1230px;width:932px;height:6px;background:rgba(246,241,232,.4);transform-origin:left center}
+    .brand{position:absolute;left:74px;top:1300px;font-size:38px;font-weight:800;letter-spacing:.06em}
+  </style>
+  <div id="root" data-composition-id="04-cta" data-width="1080" data-height="1920" data-duration="6.85">
+    <div id="f4-ground" class="clip" data-start="0" data-duration="6.85" data-track-index="0"></div>
+    <div class="k" id="e4-k">このチャンネル</div>
+    <div class="ttl" id="e4-t">一本に<br>一つずつ</div>
+    <div class="sub" id="e4-s">一人でネットショップを回す人が<br>「決めるだけで終わること」を。</div>
+    <div class="rule" id="e4-r"></div>
+    <div class="brand" id="e4-b">ひとりネットショップ研究所</div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({paused:true});
+    tl.fromTo("#e4-k",{autoAlpha:0,y:26},{autoAlpha:1,y:0,duration:.5,ease:"power3.out"},0)
+      .fromTo("#e4-t",{autoAlpha:0,y:56},{autoAlpha:1,y:0,duration:.7,ease:"power3.out"},.35)
+      .fromTo("#e4-s",{autoAlpha:0,y:36},{autoAlpha:1,y:0,duration:.6,ease:"power3.out"},1.7)
+      .fromTo("#e4-r",{scaleX:0},{scaleX:1,duration:.6,ease:"power2.inOut"},3.0)
+      .fromTo("#e4-b",{autoAlpha:0,y:20},{autoAlpha:1,y:0,duration:.5,ease:"power3.out"},3.4);
+    window.__timelines["04-cta"] = tl;
+  </script>
+</template>

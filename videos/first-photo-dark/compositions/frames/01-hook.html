@@ -1,0 +1,38 @@
+<template>
+  <style>
+    #f1-ground{position:absolute;inset:0;background:#f6f1e8}
+    #root{position:relative;width:1080px;height:1920px;overflow:hidden;color:#1534c5;font-family:"Noto Sans JP",system-ui,sans-serif}
+    .k{position:absolute;left:74px;top:150px;font-size:29px;font-weight:700;letter-spacing:.2em}
+    .ttl{position:absolute;left:74px;top:236px;font-size:90px;font-weight:800;line-height:1.06;letter-spacing:-.055em}
+    .row{position:absolute;left:74px;top:596px;width:932px;height:330px}
+    .card{position:absolute;top:0;width:288px;height:330px;background:#fff;border-radius:16px;border:4px solid rgba(21,52,197,.14);overflow:hidden}
+    .card img{position:absolute;width:210%;height:auto;left:-46.5%;top:-79%;display:block}
+    .c1{left:0}.c2{left:322px}.c3{left:644px}
+    .note{position:absolute;left:74px;top:968px;font-size:41px;font-weight:700}
+    .note b{color:#f0b400}
+    .band{position:absolute;left:0;right:0;top:1370px;padding:52px 74px;background:#1534c5;color:#f6f1e8}
+    .band .t{font-size:52px;font-weight:800;line-height:1.28}
+  </style>
+  <div id="root" data-composition-id="01-hook" data-width="1080" data-height="1920" data-duration="8.126">
+    <div id="f1-ground" class="clip" data-start="0" data-duration="8.126" data-track-index="0"></div>
+    <div class="k" id="e1-k">商品写真</div>
+    <div class="ttl" id="e1-t">一覧で飛ばされるのは<br>1枚目が暗い商品</div>
+    <div class="row">
+      <div class="card c1" id="e1-c1" data-layout-allow-overflow><img src="assets/bright-window.png" alt="" /></div>
+      <div class="card c2" id="e1-c2" data-layout-allow-overflow><img src="assets/dark-desk.png" alt="" /></div>
+      <div class="card c3" id="e1-c3" data-layout-allow-overflow><img src="assets/bright-window.png" alt="" /></div>
+    </div>
+    <div class="note" id="e1-n">3枚のうち、<b>目に入らない</b>のはどれか。</div>
+    <div class="band" id="e1-b"><div class="t">買う人は、一つずつ<br>見比べていません。</div></div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const tl = gsap.timeline({paused:true});
+    tl.fromTo("#e1-k,#e1-t",{autoAlpha:0,y:44},{autoAlpha:1,y:0,duration:.58,stagger:.1,ease:"power3.out"},0)
+      .fromTo("#e1-c1,#e1-c2,#e1-c3",{autoAlpha:0,y:56,scale:.94},{autoAlpha:1,y:0,scale:1,duration:.55,stagger:.22,ease:"power3.out"},1.3)
+      .fromTo("#e1-n",{autoAlpha:0,x:-40},{autoAlpha:1,x:0,duration:.5,ease:"power3.out"},3.6)
+      .fromTo("#e1-b",{autoAlpha:0,y:70},{autoAlpha:1,y:0,duration:.62,ease:"power3.out"},5.4);
+    window.__timelines["01-hook"] = tl;
+  </script>
+</template>
