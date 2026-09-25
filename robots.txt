@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://interhiro.github.io/ec-hitori-tools/sitemap.xml
